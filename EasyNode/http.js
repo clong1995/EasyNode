@@ -55,18 +55,16 @@ module.exports = ({
                     req.on("data", data => postData += data);
                     req.on("end", () => {
                         try {
-                            if (dev) delete require.cache[require.resolve(file)];
-                            data = require(file)(arr[3], postData);
-                            output(res, 'json 200', data);
+                            dev && delete require.cache[require.resolve(file)];
+                            require(file)(arr[3], postData, data => output(res, 'json 200', data));
                         } catch (err) {
                             output(res, 500, err)
                         }
                     });
                 } else {//GET
                     try {
-                        if (dev) delete require.cache[require.resolve(file)];
-                        data = require(file)(arr[3], url.parse(req.url, true).query);
-                        output(res, 'json 200', data);
+                        dev && delete require.cache[require.resolve(file)];
+                        require(file)(arr[3], url.parse(req.url, true).query, data => output(res, 'json 200', data));
                     } catch (err) {
                         output(res, 'json 200', err)
                     }

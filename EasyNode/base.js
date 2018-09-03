@@ -328,13 +328,15 @@ module.exports = {
         console.log(log);
 
         //写文件
-        let file = globalVar.get('logPath') + '/' + date('yyyy-MM-dd HH');
-        fs.appendFile(file, log + '\r\n', err => {
-            if (err) {
-                console.log('Log write failed');
-                return;
-            }
-        });
+        if(globalVar.has('logPath')){
+            let file = globalVar.get('logPath') + '/' + date('yyyy-MM-dd HH');
+            fs.appendFile(file, log+'\r\n', err => {
+                if (err) {
+                    console.log('Log write failed');
+                    return;
+                }
+            });
+        }
     },
 
     /**
