@@ -202,6 +202,10 @@ module.exports = {
      */
     randomNum: (minNum = 0, maxNum = 1000) => parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10),
 
+    //存在替换，不存在插入
+    replaceGlobal: (key, value) => globalVar.set(key, value),
+
+    //设置全局变量
     setGlobal: (key, value) => globalVar.has(key)
         ? console.error(key + ' 全局变量：已经被使用了！')
         : globalVar.set(key, value),
@@ -325,7 +329,7 @@ module.exports = {
 
         //写文件
         let file = globalVar.get('logPath') + '/' + date('yyyy-MM-dd HH');
-        fs.appendFile(file, log+'\r\n', err => {
+        fs.appendFile(file, log + '\r\n', err => {
             if (err) {
                 console.log('Log write failed');
                 return;
